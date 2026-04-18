@@ -1,6 +1,22 @@
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from googletrans import Translator
+import os
+from flask import Flask
+from threading import Thread
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "I'm alive!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
 
 # Bot tokenын усында қойың
 BOT_TOKEN = "8662560813:AAHFsXWJUjLpIB8cxxoQ_fj5OphDgZ-Qny4"
@@ -173,4 +189,5 @@ def handle_language_choice(call):
 # =============================================
 if __name__ == "__main__":
     print("🤖 Аударма боты жумысқа кирди...")
+    keep_alive()
     bot.infinity_polling()
